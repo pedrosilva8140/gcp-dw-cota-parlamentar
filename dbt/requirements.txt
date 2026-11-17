@@ -1,2 +1,2 @@
-dbt-core==1.13.X
-dbt-bigquery==1.X.X
+dbt-bigquery==1.12.3
+dbt-core==1.13.0b1

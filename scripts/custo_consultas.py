@@ -36,11 +36,11 @@ CONSULTAS = [
     ("3. Fato, filtro na partição",
      f"select sum(valor_liquido) from marts.fct_despesas where {FILTRO_2023}"),
     ("4. Fato, partição + cluster",
-     f"select sum(valor_liquido) from marts.fct_despesas "
-     f"where {FILTRO_2023} and tipo_despesa_sk = {tipo.tipo_despesa_sk}"),
+     (f"select sum(valor_liquido) from marts.fct_despesas "
+      f"where {FILTRO_2023} and tipo_despesa_sk = {tipo.tipo_despesa_sk}")),
     ("5. Fato, coluna não correlacionada",
-     f"select sum(valor_liquido) from marts.fct_despesas "
-     f"where fornecedor_sk = {fornecedor.fornecedor_sk}"),
+     (f"select sum(valor_liquido) from marts.fct_despesas "
+      f"where fornecedor_sk = {fornecedor.fornecedor_sk}")),
 ]
 
 print(f"Cluster: tipo_despesa_sk = {tipo.tipo_despesa_sk} ({tipo.tipo_despesa})")
