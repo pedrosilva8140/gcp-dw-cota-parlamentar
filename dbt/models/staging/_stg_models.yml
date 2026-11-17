@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: stg_despesas
+    description: >
+      Despesas da CEAP limpas e tipadas, 2019-2026. Grão: uma linha por lançamento do
+      arquivo de origem. Não há chave natural; lancamento_id é uma chave substituta
+      (hash da linha bruta + número da ocorrência).
+    columns:
+      - name: lancamento_id
+        description: Chave substituta, única por lançamento.
+        data_tests:
+          - unique
+          - not_null
+      - name: despesa_id
+        description: >
+          ID do documento na Câmara (ideDocumento). NÃO é único: passagens com vários
+          trechos, estornos e IDs reaproveitados entre beneficiários. Nulo para telefonia
+          e serviços postais (placeholder '0').
+      - name: eh_duplicata_exata
+        description: >
+          Verdadeiro a partir da 2ª ocorrência de uma linha 100% idêntica na origem bruta.
+          Na carga 2019-2026 não há nenhuma; o teste avisa se aparecer em cargas futuras.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [false]
+                quote: false
+              config:
+                severity: warn
+      - name: valor_liquido
+        data_tests:
+          - not_null
+      - name: tipo_beneficiario
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['deputado', 'lideranca']
+
+  - name: stg_deputados
+    description: Cadastro atual dos deputados (API de Dados Abertos).
+    columns:
+      - name: deputado_id
+        data_tests:
+          - not_null
+          - unique

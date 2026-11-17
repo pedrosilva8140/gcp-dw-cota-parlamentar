@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: raw
+    database: portfolio-de-pedro
+    schema: raw
+    tables:
+      - name: despesas
+        identifier: despesas_*
+        description: Despesas da Cota Parlamentar (CEAP), uma tabela por ano (2019-2026). Todas as colunas como STRING.
+      - name: deputados
+        description: Cadastro atual dos deputados, da API de Dados Abertos da Câmara.

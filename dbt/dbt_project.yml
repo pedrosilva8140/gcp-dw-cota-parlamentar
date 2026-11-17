@@ -1,0 +1,18 @@
+name: cota_parlamentar
+version: "1.0.0"
+profile: cota_parlamentar
+
+model-paths: ["models"]
+snapshot-paths: ["snapshots"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  cota_parlamentar:
+    staging:
+      +schema: staging
+      +materialized: view
+    marts:
+      +schema: marts
+      +materialized: table
