@@ -13,6 +13,10 @@ models:
           - not_null
       - name: partido
         description: Partido na versão. "S.PART." indica período sem partido.
+      - name: em_exercicio_atual
+        description: >
+          Deputado consta na lista atual da API (/deputados), ou seja, em exercício hoje.
+          Vem de stg_deputados; false para o membro especial -1.
 
   - name: dim_tipo_despesa
     columns:

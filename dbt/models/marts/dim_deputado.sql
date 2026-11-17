@@ -66,12 +66,14 @@ select
     data_evento,                                                -- data real do evento na API
     if(numero_versao = 1, date '1900-01-01', data_evento) as valido_de,  -- 1ª versão vale "desde sempre"
     valido_ate,
-    valido_ate is null                                    as eh_atual
+    valido_ate is null                                    as eh_atual,
+    atuais.deputado_id is not null                        as em_exercicio_atual
 from versoes
+left join (select deputado_id from {{ ref('stg_deputados') }}) as atuais using (deputado_id)
 
 union all
 
 -- membro especial: lançamentos de lideranças (sem deputado)
 select
     -1, null, 'Não se aplica (liderança)', null, null, false,
-    1, null, date '1900-01-01', null, true
+    1, null, date '1900-01-01', null, true, false
