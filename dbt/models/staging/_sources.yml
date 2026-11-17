@@ -10,3 +10,8 @@ sources:
         description: Despesas da Cota Parlamentar (CEAP), uma tabela por ano (2019-2026). Todas as colunas como STRING.
       - name: deputados
         description: Cadastro atual dos deputados, da API de Dados Abertos da Câmara.
+      - name: deputados_historico
+        description: >
+          Log de eventos de cada deputado (/deputados/{id}/historico): posse, troca de
+          partido, afastamento etc. Sem filtros; inclui eventos sintéticos de início
+          de legislatura (situacao nula, data fixa).
