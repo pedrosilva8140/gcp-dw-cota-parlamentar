@@ -16,3 +16,10 @@ models:
     marts:
       +schema: marts
       +materialized: table
+
+seeds:
+  cota_parlamentar:
+    +schema: staging
+    partidos_sucessao:
+      +column_types:
+        ano: int64

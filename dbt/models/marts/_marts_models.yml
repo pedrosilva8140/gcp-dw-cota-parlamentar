@@ -77,3 +77,15 @@ models:
                 field: data
       - name: partido_na_despesa
         description: Partido como consta na fonte. Retroativo; para o partido real use dim_deputado.
+
+  - name: rpt_divergencia_partido
+    description: >
+      Valor das despesas de deputados por tipo de divergência entre o partido da fonte
+      (retroativo) e o partido real na data da despesa (SCD2).
+    columns:
+      - name: classificacao
+        data_tests:
+          - unique
+          - accepted_values:
+              arguments:
+                values: ['igual', 'renomeacao', 'fusao_ou_incorporacao', 'troca_real', 'sem_partido_na_fonte']

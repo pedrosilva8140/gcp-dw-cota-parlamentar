@@ -1,0 +1,20 @@
+version: 2
+
+seeds:
+  - name: partidos_sucessao
+    description: >
+      Sucessões partidárias (renomeação, fusão, incorporação), conferidas com TSE e TRE-BA.
+      Inclui variantes de sigla encontradas nos dados (ex.: PATRI = PATRIOTA).
+    columns:
+      - name: tipo
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['renomeacao', 'fusao', 'incorporacao']
+      - name: sigla_antiga
+        data_tests:
+          - not_null
+          - unique:
+              arguments:
+                column_name: "sigla_antiga || '>' || sigla_nova"
