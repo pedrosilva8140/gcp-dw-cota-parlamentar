@@ -93,3 +93,19 @@ models:
           - accepted_values:
               arguments:
                 values: ['igual', 'renomeacao', 'fusao_ou_incorporacao', 'troca_real', 'sem_partido_na_fonte']
+
+  - name: rpt_painel_despesas
+    description: >
+      Tabela larga consumida pelo Looker Studio. Um lançamento por linha, com partido real (SCD2),
+      partido da fonte e a classificação da divergência. Nome de fornecedor pessoa física é ocultado (LGPD).
+    columns:
+      - name: lancamento_id
+        data_tests:
+          - unique
+          - not_null
+      - name: classificacao
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['igual', 'renomeacao', 'fusao_ou_incorporacao', 'troca_real', 'sem_partido_na_fonte', 'lideranca']
