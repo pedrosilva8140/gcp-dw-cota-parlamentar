@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+
+# dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+.user.yml
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# Dados baixados localmente
+data/
+
+# Segredos
+.env
+*-key.json
