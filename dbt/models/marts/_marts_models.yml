@@ -13,3 +13,67 @@ models:
           - not_null
       - name: partido
         description: Partido na versão. "S.PART." indica período sem partido.
+
+  - name: dim_tipo_despesa
+    columns:
+      - name: tipo_despesa_sk
+        data_tests: [unique, not_null]
+
+  - name: dim_fornecedor
+    description: Fornecedores por documento. CPF de pessoa física não é exposto (LGPD).
+    columns:
+      - name: fornecedor_sk
+        data_tests: [unique, not_null]
+
+  - name: dim_data
+    columns:
+      - name: data
+        data_tests: [unique, not_null]
+
+  - name: fct_despesas
+    description: >
+      Fato de despesas da CEAP, 2019-2026. Grão: um lançamento do arquivo de origem.
+      Particionada por mês de competência (data_competencia) e clusterizada por tipo de despesa e deputado.
+      O deputado é resolvido ponto no tempo contra a dim_deputado (SCD2).
+    columns:
+      - name: lancamento_id
+        data_tests: [unique, not_null]
+      - name: deputado_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_deputado')
+                field: deputado_sk
+      - name: fornecedor_sk
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_fornecedor')
+                field: fornecedor_sk
+      - name: tipo_despesa_sk
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_tipo_despesa')
+                field: tipo_despesa_sk
+      - name: data_competencia
+        description: >
+          Primeiro dia do mês de competência (ano/mes da CEAP). Sempre preenchida; é a
+          coluna de partição. Use-a para filtrar períodos: data_emissao é nula em ~54 mil
+          estornos e tem outliers (ex.: um lançamento de 2002).
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_data')
+                field: data
+      - name: data_emissao
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_data')
+                field: data
+      - name: partido_na_despesa
+        description: Partido como consta na fonte. Retroativo; para o partido real use dim_deputado.
