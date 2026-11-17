@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: dim_deputado
+    description: >
+      Deputados como SCD tipo 2 (uma versão por período em cada partido/UF), construída
+      a partir do log de eventos da API. Validade semiaberta [valido_de, valido_ate).
+      deputado_sk = -1 é o membro "Não se aplica" usado pelas lideranças.
+    columns:
+      - name: deputado_sk
+        data_tests:
+          - unique
+          - not_null
+      - name: partido
+        description: Partido na versão. "S.PART." indica período sem partido.

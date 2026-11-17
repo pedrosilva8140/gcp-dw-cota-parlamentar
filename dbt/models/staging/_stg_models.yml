@@ -28,6 +28,11 @@ models:
                 quote: false
               config:
                 severity: warn
+      - name: partido_na_despesa
+        description: >
+          Partido como consta no arquivo da CEAP. ATENÇÃO: é preenchido retroativamente
+          (ex.: "UNIÃO", fundado em 2022, aparece em despesas de 2019). NÃO usar como
+          histórico de filiação; para isso use a dimensão de deputados (SCD2).
       - name: valor_liquido
         data_tests:
           - not_null
@@ -44,3 +49,16 @@ models:
         data_tests:
           - not_null
           - unique
+
+  - name: stg_deputados_historico
+    description: >
+      Log de eventos reais de cada deputado (posse, troca de partido, afastamento...).
+      Eventos sintéticos de início de legislatura são descartados.
+    columns:
+      - name: deputado_id
+        data_tests:
+          - not_null
+      - name: data_hora
+        description: Data e hora do evento. Nulo indicaria um formato não previsto.
+        data_tests:
+          - not_null
